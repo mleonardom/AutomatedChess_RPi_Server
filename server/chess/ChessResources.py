@@ -42,7 +42,7 @@ class GameResource(AbstractResource):
                 except:
                     pass
             doc = {
-                "is_valid_move": is_correct_move
+                "is_valid_move": is_correct_move,
                 "stockfish_move": stockfish_move
             }
             self._response200(resp, doc)
