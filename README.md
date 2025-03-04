@@ -15,3 +15,49 @@ To take code changes use the `--reload` command option
 ```bash
 gunicorn --bind 0.0.0.0:8000 --reload server.app
 ```
+
+## Game HTTP requests
+To start a game:
+
+PUT `/chess/game`
+With Payload:
+```JSON
+{
+  "elo": 2000, // The Stockfish ELO between 1320 and 3190 (Default 1500)
+  "depth": 20, // The depth of the machine between 0 and 80 (Default 10)
+  "threads": 4 // The threads to use, this must be the same CPU number (Default 2)
+}
+```
+Example response:
+```jSON
+{
+  "Debug Log File": "",
+  "Contempt": 0,
+  "Min Split Depth": 0,
+  "Ponder": false,
+  "MultiPV": 1,
+  "Skill Level": 20,
+  "Move Overhead": 10,
+  "Minimum Thinking Time": 20,
+  "Slow Mover": 100,
+  "UCI_Chess960": false,
+  "UCI_LimitStrength": true,
+  "UCI_Elo": 2000,
+  "Threads": 4,
+  "Hash": 2048
+}
+```
+
+To make a move
+POST `/chess/game`
+```JSON
+{
+  "move": "d2d4"
+}
+```
+Example response:
+```JSON
+{
+  "stockfish_move": "g8f6" // NULL if is a invalid move
+}
+```
