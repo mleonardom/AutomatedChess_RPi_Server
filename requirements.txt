@@ -1,0 +1,3 @@
+falcon==4.0.2
+stockfish @ git+https://github.com/johndoknjas/stockfish-1
+msgpack-python
