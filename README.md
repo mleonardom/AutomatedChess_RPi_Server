@@ -13,7 +13,7 @@ $ sudo apt-get install stockfish
 To take code changes use the `--reload` command option
 
 ```bash
-gunicorn --bind 0.0.0.0:8000 --reload server.app
+gunicorn --bind 0.0.0.0:8081 --reload server.app
 ```
 
 ## Game HTTP requests
