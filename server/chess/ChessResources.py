@@ -9,6 +9,7 @@ class GameResource(AbstractResource):
     default_elo = 1500
     default_depth = 10
     default_threads = 2
+    default_user_color = "WHITE"
 
     game = Game()
 
@@ -51,10 +52,14 @@ class GameResource(AbstractResource):
     
     def on_put(self, req, resp):
         raw_data = json.load(req.bounded_stream)
+        user_color = raw_data.get("user_color", self.default_user_color)
         elo = raw_data.get("elo", self.default_elo)
         depth = raw_data.get("depth", self.default_depth)
         threads = raw_data.get("threads", self.default_threads)
 
+        if user_color != "WHITE" and user_color != 'BLACK':
+            self._response400(resp, "user_color must be WHITE or BLACK")
+            return
         if elo < 1320 or elo > 3190:
             self._response400(resp, "elo must be between 1320 and 3190")
             return
@@ -65,6 +70,6 @@ class GameResource(AbstractResource):
             self._response400(resp, "threads must be between 0 and 4")
             return
 
-        self.game.new_game(elo, depth, threads)
+        new_game_resp = self.game.new_game(user_color, elo, depth, threads)
 
-        self._response200(resp, self.game.get_parameters())
+        self._response200(resp, new_game_resp)
