@@ -26,11 +26,18 @@ class Game:
     
     def get_board_visual(self):
         global stockfishGame
-        print(stockfishGame.get_board_visual())
-        print(stockfishGame.get_engine_parameters())
-        print(stockfishGame.get_evaluation())
 
         return stockfishGame.get_board_visual()
+    
+    def get_fen_position(self):
+        global stockfishGame
+
+        return stockfishGame.get_fen_position()
+    
+    def get_evaluation(self):
+        global stockfishGame
+
+        return stockfishGame.get_evaluation()
     
     def get_parameters(self):
         global stockfishGame
@@ -44,3 +51,6 @@ class Game:
         stockfishGame.make_moves_from_current_position([stockfish_move])
 
         return stockfish_move
+    
+    def is_move_correct(self, move):
+        return stockfishGame.is_move_correct(move)

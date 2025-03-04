@@ -18,7 +18,8 @@ class GameResource(AbstractResource):
             return
 
         doc = {
-            'visual': self.game.get_board_visual()
+            'fen_position': self.game.get_fen_position(),
+            'evaluation': self.game.get_evaluation()
         }
 
         self._response200(resp, doc)
@@ -33,11 +34,15 @@ class GameResource(AbstractResource):
 
         if move:
             stockfish_move = None
-            try:
-                stockfish_move = self.game.move(move)
-            except:
-                pass
+            is_correct_move = self.game.is_move_correct(move)
+
+            if is_correct_move:
+                try:
+                    stockfish_move = self.game.move(move)
+                except:
+                    pass
             doc = {
+                "is_valid_move": is_correct_move
                 "stockfish_move": stockfish_move
             }
             self._response200(resp, doc)
